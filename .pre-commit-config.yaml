@@ -1,0 +1,6 @@
+-   repo: https://github.com/johnsrd7/pre-commit-hooks
+    sha: c1480f86a6b40d4a305f89c33d38a68cd5c003de
+    hooks:
+    -   id: go-fmt
+    -   id: go-vet
+    -   id: go-lint
