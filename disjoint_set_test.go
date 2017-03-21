@@ -70,34 +70,16 @@ func TestFind(t *testing.T) {
 	// 7
 	// 8->5
 	// 9->5
-	err := Union(dss[0], dss[1])
-	if err != nil {
-		t.Error(fmt.Sprintf("Unexpected error in building parent structure with Union: %s", err.Error()))
-	}
-	err = Union(dss[0], dss[3])
-	if err != nil {
-		t.Error(fmt.Sprintf("Unexpected error in building parent structure with Union: %s", err.Error()))
-	}
-	err = Union(dss[3], dss[4])
-	if err != nil {
-		t.Error(fmt.Sprintf("Unexpected error in building parent structure with Union: %s", err.Error()))
-	}
-	err = Union(dss[2], dss[5])
-	if err != nil {
-		t.Error(fmt.Sprintf("Unexpected error in building parent structure with Union: %s", err.Error()))
-	}
-	err = Union(dss[5], dss[8])
-	if err != nil {
-		t.Error(fmt.Sprintf("Unexpected error in building parent structure with Union: %s", err.Error()))
-	}
-	err = Union(dss[5], dss[9])
-	if err != nil {
-		t.Error(fmt.Sprintf("Unexpected error in building parent structure with Union: %s", err.Error()))
-	}
+	dss[1].parent = dss[0]
+	dss[3].parent = dss[0]
+	dss[4].parent = dss[3]
+	dss[5].parent = dss[2]
+	dss[8].parent = dss[5]
+	dss[9].parent = dss[5]
 
 	parents := []*DisjointSet{dss[0], dss[0], dss[2], dss[0], dss[0], dss[2], dss[6], dss[7], dss[2], dss[2]}
 	for idx, ds := range dss {
-		parent, err := Find(ds)
+		parent, err := ds.Find()
 		if err != nil {
 			t.Error(fmt.Sprintf("Unexpected error in Find: %s", err.Error()))
 		}
