@@ -126,4 +126,7 @@ func TestUnion(t *testing.T) {
 	if dss[1].parent != dss[0] {
 		t.Error(fmt.Sprintf("Expected parent: %v, Actual parent: %v", dss[0], dss[1].parent))
 	}
+	if dss[0].parent != nil {
+		t.Error("Parent should still be nil.")
+	}
 }
