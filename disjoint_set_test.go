@@ -113,7 +113,7 @@ func TestUnion(t *testing.T) {
 	}
 	p, _ = dss[1].Find()
 	if p != dss[0] {
-		t.Errorf("dss[1].Find(): %v\n", p, dss[0])
+		t.Errorf("dss[1].Find(): %v\n", p)
 	}
 	p, _ = dss[0].Find()
 	if p != dss[0] {
@@ -127,7 +127,7 @@ func TestUnion(t *testing.T) {
 	}
 	p, _ = dss[2].Find()
 	if p != dss[0] {
-		t.Errorf("dss[2].Find(): %v\n", p, dss[0])
+		t.Errorf("dss[2].Find(): %v\n", p)
 	}
 	p, _ = dss[0].Find()
 	if p != dss[0] {
@@ -141,7 +141,7 @@ func TestUnion(t *testing.T) {
 	}
 	p, _ = dss[3].Find()
 	if p != dss[0] {
-		t.Errorf("dss[3].Find(): %v\n", p, dss[0])
+		t.Errorf("dss[3].Find(): %v\n", p)
 	}
 	p, _ = dss[0].Find()
 	if p != dss[0] {
