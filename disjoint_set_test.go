@@ -1,7 +1,6 @@
 package disjointset
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -97,24 +96,13 @@ func TestUnion(t *testing.T) {
 		dss = append(dss, MakeSet(i))
 	}
 
-	// Structure:
-	// 0
-	// 1->0
-	// 2
-	// 3->0
-	// 4->3
-	// 5->2
-	// 6
-	// 7
-	// 8->5
-	// 9->5
-
 	// Test when the roots are the same
 	err := Union(dss[0], dss[0])
 	if err != nil {
 		t.Error(err)
 	}
-	if dss[0].parent != nil {
+	p, _ := dss[0].Find()
+	if p != dss[0] {
 		t.Error("Union of roots should do nothing")
 	}
 
@@ -123,10 +111,63 @@ func TestUnion(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if dss[1].parent != dss[0] {
-		t.Error(fmt.Sprintf("Expected parent: %v, Actual parent: %v", dss[0], dss[1].parent))
+	p, _ = dss[1].Find()
+	if p != dss[0] {
+		t.Errorf("dss[1].Find(): %v\n", p, dss[0])
 	}
-	if dss[0].parent != nil {
-		t.Error("Parent should still be nil.")
+	p, _ = dss[0].Find()
+	if p != dss[0] {
+		t.Errorf("dss[0].Find(): %v", p)
+	}
+
+	// Union when 1 has rank 0 and 1 has rank 1
+	err = Union(dss[0], dss[2])
+	if err != nil {
+		t.Error(err)
+	}
+	p, _ = dss[2].Find()
+	if p != dss[0] {
+		t.Errorf("dss[2].Find(): %v\n", p, dss[0])
+	}
+	p, _ = dss[0].Find()
+	if p != dss[0] {
+		t.Errorf("dss[0].Find(): %v", p)
+	}
+
+	// Union when ranks are switched
+	err = Union(dss[3], dss[0])
+	if err != nil {
+		t.Error(err)
+	}
+	p, _ = dss[3].Find()
+	if p != dss[0] {
+		t.Errorf("dss[3].Find(): %v\n", p, dss[0])
+	}
+	p, _ = dss[0].Find()
+	if p != dss[0] {
+		t.Errorf("dss[0].Find(): %v", p)
+	}
+
+	// Union when ranks are more than 0 but different
+	err = Union(dss[4], dss[5])
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = Union(dss[4], dss[3])
+	if err != nil {
+		t.Error(err)
+	}
+	p4, _ := dss[4].Find()
+	p3, _ := dss[3].Find()
+	p5, _ := dss[5].Find()
+	if p3 != p4 {
+		t.Errorf("dss[3].Find(): %v, dss[4].Find(): %v\n", p3, p4)
+	}
+	if p3 != p5 {
+		t.Errorf("dss[3].Find(): %v, dss[5].Find(): %v\n", p3, p5)
+	}
+	if p4 != p5 {
+		t.Errorf("dss[4].Find(): %v, dss[5].Find(): %v\n", p4, p5)
 	}
 }
